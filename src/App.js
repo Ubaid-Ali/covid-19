@@ -11,32 +11,32 @@ function App() {
   const [globalSt, setGlobalSt] = useState();
   const [countrySt, setCountrySt] = useState();
 
+  // set states
   useEffect(() => {
     async function getData() {
-      const {Global, Countries} = await FetchData();
+      const { Global, Countries } = await FetchData();
 
       setGlobalSt({
         TotalConfirmed: Global.TotalConfirmed,
         TotalRecovered: Global.TotalRecovered,
-        TotalDeaths: Global.TotalDeaths      
+        TotalDeaths: Global.TotalDeaths
       });
 
       setCountrySt(Countries);
     }
-    
+
     getData();
-    
+
   }, []);
 
-  // console.log(globalSt)
-  // console.log(countrySt)
 
   return (
-    <div className="App-container">
+    <div >
       <Header />
-      <h1>Feching the Data</h1>
-      <MidDiv globalData={globalSt} countryData={countrySt} />
-
+      <div className="App-header">
+        <h2 className='app-h2'> Current Status </h2>
+        <MidDiv globalData={globalSt} countryData={countrySt} />
+      </div>
     </div>
   );
 }

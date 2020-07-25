@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -8,38 +8,52 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   paper: {
+
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
 }));
 
+
 export default function MidDiv(props) {
   const classes = useStyles();
 
   const [globalData, setglobalData] = useState();
   const [countriesData, setCountriesData] = useState();
-  const [display, setDisplay] = useState();
+  const [display, setDisplay] = useState(
+    {
+      TotalConfirmed: 0,
+      TotalRecovered: 0,
+      TotalDeaths: 0
+    }
+  );
 
 
-  const stateSetterFnc = async () => {
+  useEffect(() => {
 
-    // Setting Countries Data in State
-    let response = await props.countryData;
-    setCountriesData(response)
-    setDisplay(response)
-    // Setting Globald Data in State
-    let response2 = await props.globalData
-    setglobalData(response2)
+    const stateSetterFnc = async () => {
 
-  }
+      // Setting Globald Data in State
+      let response = await props.globalData
+      setglobalData(response)
+      setDisplay(response)
 
-  stateSetterFnc()
+      // Setting Countries Data in State
+      let response2 = await props.countryData;
+      setCountriesData(response2)
+
+    }
+    stateSetterFnc()
+
+  }, [props]);
 
 
+
+  // Select Box Options
   // Geting the Country Names
   let names = [];
-  if (countriesData == undefined) {
+  if (countriesData === undefined) {
     console.log('wait for props, Fetching')
   }
   else {
@@ -48,10 +62,10 @@ export default function MidDiv(props) {
     })
   }
   // console.log(names)
-  
-  
-  const onChange_Handler = (e) => {
 
+
+  // Run when onChange
+  const onChange_Handler = (e) => {
     let countryObj = [];
 
     // pick country object here
@@ -60,67 +74,59 @@ export default function MidDiv(props) {
     if (e.target.value == 'Global') {
       countryObj[0] = globalData;
     }
+    setDisplay(countryObj[0])
 
-    setDisplay(countryObj[0] )
-
-    console.log(countryObj);
-    console.log(display);
-
+    // console.log(countryObj);
+    // console.log(display);
   }
 
   console.log(display);
 
+  if (display == undefined) {
+    return (
+      <h3 className='loading' >Loading</h3>
+    )
+  }
+  else {
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <select onChange={onChange_Handler} className='select-box'>
+                <option value='Global'>Global</option>
+                {names.map((cntry) => {
+                  return (
+                    <option key={cntry} >{cntry}</option>
+                  )
+                })}
+              </select>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Paper className={classes.paper}>
+              <h3> TOTAL CASES </h3>
+              <h3> {display.TotalConfirmed} </h3>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Paper className={classes.paper}>
+              <h3> TOTAL RECOVERD </h3>
+              <h3> {display.TotalRecovered} </h3>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Paper className={classes.paper}>
+              <h3> TOTAL DEATHS </h3>
+              <h3> {display.TotalDeaths} </h3>
+            </Paper>
+          </Grid>
 
 
-
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <select onChange={onChange_Handler}>
-              <option>Global</option>
-              {names.map((cntry) => {
-                return (
-                  <option key={cntry} >{cntry}</option>
-                )
-              })}
-            </select>
-          </Paper>
         </Grid>
-        {/* {Object.keys(display).map((arr) => {
-          return (
-            <Grid item xs={12} sm={4}>
-              <Paper className={classes.paper}>
-                <p> {display.arr} </p>
-                <p> {arr} </p>
-              </Paper>
-            </Grid>
-          )
-        })} */}
-
-
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.paper}>
-            <p>  </p>
-            <p> 0 </p>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.paper}>
-            <p> TOTAL RECOVER </p>
-            <p> 0 </p>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.paper}>
-            <p> TOTAL DEATHS </p>
-            <p> 0 </p>
-          </Paper>
-        </Grid>
-
-
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
