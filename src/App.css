@@ -1,41 +1,28 @@
 .App {
   text-align: center;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
+#app-main{
+  position: fixed;
+  background-image: url(./corona2.jpg);
+  width: 100%;
+  height: 700px;
+  background-repeat: repeat;
+}
 
 .App-header {
   background-color: #282c34;
-  /* min-height: 100vh; */
-  /* display: flex; */
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
   color: white;
   padding: 5%;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.all-items{
+  background-color: rgba(25, 26, 23, 0.76);
 }
 
 .loading{
@@ -48,14 +35,38 @@
 
 .app-h2{
   text-align: center;
-  color: aqua;
+  color: rgb(255, 255, 255);
 }
 
 .select-box{
+  border-radius: 6px;
+  border: 2px solid #282c34;
+  box-shadow: 0 0 10px white;
   font-weight: bold;  
   padding: 5px;
   color: #282c34;
 }
+
+.select-box:hover{
+border: 2px solid rgb(151, 141, 240);
+box-shadow: 0 0 10px rgb(151, 141, 240);
+font-weight: bolder;
+}
+
 .select-box > option{
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  
 }
+
+.total-cases{
+  color: blue;
+}
+
+.total-recovered{
+color: green;
+}
+
+.total-deaths{
+  color: red;
+}
+
+
