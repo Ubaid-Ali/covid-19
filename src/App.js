@@ -25,9 +25,14 @@ function App() {
   return (
     <div id='app-main'>
       <div >
-      <Header />
-        <h2 className='app-h2'> Current Status </h2>
+        <Header />
+        <h2 className='app-h2'> CURRENT STATUS OF CORONA VIRUS </h2>
         <MidDiv globalData={globalSt} countryData={countrySt} />
+        <br />
+        <footer >
+          <h4 className='footer'>CREATED BY UBAID ALI</h4>
+          <hr />
+        </footer>
       </div>
     </div>
   );
