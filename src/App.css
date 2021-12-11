@@ -1,83 +1,98 @@
-body{
-  background-color: rgba(27, 66, 238, 0.171);
+body {
+  background-color: #3f51b5;
 }
 
 .App {
   text-align: center;
 }
 
-/* 
-#app-main{
-  background-image: url(./corona2.jpg);
-  width: 100%;
-  background-repeat: repeat;
-  opacity: inherit;
-} */
-
-.App-header {
-  background-color: #282c34;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  padding: 5%;
-}
-
-.all-items{
-  background-color: rgba(25, 26, 23, 0.76);
-}
-
-.loading{
+.body {
+  background-image: url("./corona2.jpg"); 
   text-align: center;
-  color: crimson;
+	width: 100%;
+	height: auto;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0 0 85% 85% / 30%;
+}
+.body .overlay{
+	width: 100%;
+	height: 100%;
+	padding: 50px;
+	color: #FFF;
+	text-shadow: 1px 1px 1px #333;
+  background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+}
+
+.loading {
+  text-align: center;
+  color: rgb(12, 39, 189);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0.329);
   margin: 0 50%;
 }
 
-.app-h2{
+.app-h2 {
+  font-family: "Dancing Script", cursive;
+  font-size: 30px;
+  margin-bottom: 30px;
   text-align: center;
-  text-align: center;
-  color: rgba(173, 174, 194, 0.746) ;
-  text-shadow: 0 0 1px black;
-  border-bottom: 3px solid rgba(173, 174, 194, 0.746);
+  color: lightgray;
+
 }
 
-.select-box{
-  border-radius: 6px;
+.select-box {
+  font-size: medium;
   border: 3px solid lightgray;
   box-shadow: 0 0 10px white;
-  font-weight: bold;  
-  padding: 3px;
+  font-weight: bold;
   color: #282c34;
   margin-bottom: 5px;
+  padding: 10px 20px;
+	border-radius: 10px 10px 5px 5px;
 }
 
-.select-box:hover{
-  border: 3px solid rgb(240, 169, 141);
-  box-shadow: 0 0 10px rgb(240, 169, 141);
-  background-color: rgba(255, 217, 0, 0.253);
+.select-box:hover {
+  box-shadow: 0 0 10px white;
+  font-weight: bold;
+  color: #282c34;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+	border-radius: 10px 10px 2px 2px;
+  border: 3px solid rgb(0, 4, 255);
+  box-shadow: 0 0 10px rgb(0, 4, 255);
+  background-color: rgba(201, 198, 246, 0.801);
 }
 
-.select-box option{
-  font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;  
+.select-box option {
+  font-family: "Segoe UI", "Open Sans", "Helvetica Neue", sans-serif;
+  border: 3px solid lightgray;
+  box-shadow: 0 0 10px white;
+  font-weight: bold;
+  color: #282c34;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+	border-radius: 10px 10px 2px 2px;
+  background-color: rgba(201, 198, 246, 0.801);
 }
 
-
-.total-cases{
+.total-cases {
   color: rgb(36, 93, 200);
 }
 
-.total-recovered{
-color: rgb(57, 224, 57);
+.total-recovered {
+  color: rgb(57, 224, 57);
 }
 
-.total-deaths{
+.total-deaths {
   color: rgb(212, 29, 29);
 }
 
-.footer{
-    text-align: center;
-    color: rgba(194, 173, 173, 0.746) ;
-    text-shadow: 0 0 2px black;
+.footer {
+  text-align: center;
+  color: ligh;
+  text-shadow: 0 0 2px whitesmoke;
+  color: #FFF;
 }
-

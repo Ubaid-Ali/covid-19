@@ -1,138 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
-import Countup from 'react-countup';
-import { Bar } from 'react-chartjs-2';
+import Countup from "react-countup";
+import { Bar } from "react-chartjs-2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 2,
-    padding: '0 5%'
+    padding: "0 5%",
   },
   paper: {
-    boxShadow: '0 0 7px black',
-    borderRadius: '10px',
+    boxShadow: "0 0 7px black",
+    borderRadius: "10px",
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   },
 
   chart: {
-    // backgroundColor: 'rgba(27, 66, 238, 0.171)',
-    marginTop: '15px',
-    borderRadius: '10px',
-    padding: '5px',
-    boxShadow: '0 0 7px black'
-  }
+    backgroundColor: 'white',
+    marginTop: "15px",
+    borderRadius: "10px",
+    padding: "5px",
+    boxShadow: "0 0 7px black",
+  },
 }));
 
 // MID DIV
-export default function MidDiv(props) {
+export default function MidDiv({ globalData, countriesData }) {
   const classes = useStyles();
-
-  const [globalData, setglobalData] = useState();
-  const [countriesData, setCountriesData] = useState();
-  const [displayState, setDisplayState] = useState();
+  const [currentCountry, setCurretnCountry] = useState();
 
   useEffect(() => {
-    const stateSetterFnc = async () => {
-
-      // Setting Globald Data in States
-      let response = await props.globalData
-      setglobalData(response)
-      setDisplayState(response)
-
-      // Setting Countries Data in Country State
-      let response2 = await props.countryData;
-      setCountriesData(response2)
+    if (globalData) {
+      setCurretnCountry({ ...globalData, Country: "Global" });
     }
-    stateSetterFnc()
-
-  }, [props]);
-
-
+  }, [globalData, countriesData]);
 
   // Select Box Options
   // Getting the Country Names
-  let names = [];
-  if (countriesData === undefined) {
-    // console.log('wait for props, Fetching')
+  let countryNames = [];
+  if (countriesData) {
+    countryNames = countriesData.map((countryObj) => countryObj.Country);
   }
-  else {
-    for (let i of countriesData) {
-      names.push(i.Country)
-    }
-  }
-
 
   // Run when onChange / select box
   const onChange_Handler = (e) => {
-    let countryObj = [];
-
-    // pick selected country object 
-    countryObj = countriesData.filter((val) => val.Country === e.target.value)
-
     // when select global again
-    if (e.target.value === 'Global') {
-      countryObj[0] = globalData;
+    if (e.target.value === "Global") {
+      return setCurretnCountry({ ...globalData, Country: "Global" });
+    } else {
+      // when select country
+      let selectedCountry = [];
+      selectedCountry = countriesData.filter(
+        (countryObj) => countryObj.Country === e.target.value
+      );
+      setCurretnCountry(selectedCountry[0]);
     }
-    setDisplayState(countryObj[0])
-  }
+  };
 
   // Making a Chart
-  const barChart = (
-    displayState ? <Bar
+  const barChart = setCurretnCountry ? (
+    <Bar
       data={{
-        labels: ['infeced', 'Recovered', 'Deaths'],
-        datasets: [{
-          label: 'People',
-          backgroundColor: ['rgb(36, 93, 200)', 'rgb(57, 224, 57)', 'rgb(212, 29, 29)'],
-          data: [displayState.TotalConfirmed, displayState.TotalRecovered, displayState.TotalDeaths]
-        }]
+        labels: ["infeced", "Recovered", "Deaths"],
+        datasets: [
+          {
+            label: "People",
+            backgroundColor: [
+              "rgb(36, 93, 200)",
+              "rgb(57, 224, 57)",
+              "rgb(212, 29, 29)",
+            ],
+            data: [
+              currentCountry?.TotalConfirmed,
+              currentCountry?.TotalRecovered,
+              currentCountry?.TotalDeaths,
+            ],
+          },
+        ],
       }}
       options={{
         legend: { display: false },
-        title: { display: true, text: `Current State in ${displayState.Country ? displayState.Country : 'Global'}` }
+        title: {
+          display: true,
+          text: `Current State in ${currentCountry?.Country}`,
+        },
       }}
-    /> : null
-  )
+    />
+  ) : null;
+
+  // console.log(`currentCountry`, currentCountry);
 
   // RETURN FROM HERE / JSX
-  if (displayState === undefined) {
+  if (currentCountry === undefined) {
+    return <h3 className="loading">Loading...</h3>;
+  } else {
     return (
-      <h3 className='LOADING' >Loading</h3>
-    )
-  }
-  else {
-
-    return (
-      <div className={classes.root} >
-        <Grid container spacing={6} >
+      <div className={classes.root}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
-
             <Paper className={classes.paper}>
-
               {/* DATE DISPLAYING */}
-              <h3>
-                {displayState.Date ?
-                  (new Date(displayState.Date).toDateString()) :
-                  (new Date().toDateString())}
-              </h3>
+              {/* <h3>
+                {displayState.Date
+                  ? new Date(displayState.Date).toDateString()
+                  : new Date().toDateString()}
+              </h3> */}
 
               {/* SELECT BOX */}
-              <select
-                onChange={onChange_Handler}
-                className='select-box'
-              >
+              <select onChange={onChange_Handler} className="select-box">
                 <option>Global</option>
-                {names.map((cntry) => {
-                  return (
-                    <option
-                      key={cntry}>{cntry}</option>
-                  )
-                })}
+                {countryNames &&
+                  countryNames.map((cntry) => {
+                    return <option key={cntry}>{cntry}</option>;
+                  })}
               </select>
             </Paper>
           </Grid>
@@ -141,13 +125,16 @@ export default function MidDiv(props) {
           <Grid item xs={12} sm={4}>
             <Paper className={classes.paper}>
               <div>
-                <h2> TOTAL <br /> CONFIRMED </h2>
-                <h2 className='total-cases'>
+                <h2>
+                  {" "}
+                  TOTAL <br /> CONFIRMED{" "}
+                </h2>
+                <h2 className="total-cases">
                   <Countup
                     start={0}
-                    end={displayState.TotalConfirmed ? displayState.TotalConfirmed : 0}
+                    end={currentCountry.TotalConfirmed || 0}
                     duration={2.5}
-                    separator={','}
+                    separator={","}
                   />
                 </h2>
                 <hr />
@@ -159,14 +146,17 @@ export default function MidDiv(props) {
           {/* SHOWING DATA RECOVERED*/}
           <Grid item xs={12} sm={4}>
             <Paper className={classes.paper}>
-              <div >
-                <h2> TOTAL <br /> RECOVERD </h2>
-                <h2 className='total-recovered'>
+              <div>
+                <h2>
+                  {" "}
+                  TOTAL <br /> RECOVERD{" "}
+                </h2>
+                <h2 className="total-recovered">
                   <Countup
                     duration={2.5}
-                    separator={','}
+                    separator={","}
                     start={0}
-                    end={displayState.TotalRecovered ? displayState.TotalRecovered : 0}
+                    end={currentCountry.TotalRecovered || 0}
                   />
                 </h2>
                 <hr />
@@ -182,12 +172,12 @@ export default function MidDiv(props) {
                 <h2>
                   TOTAL <br /> DEATHS
                 </h2>
-                <h2 className='total-deaths'>
+                <h2 className="total-deaths">
                   <Countup
                     start={0}
-                    end={displayState.TotalDeaths ? displayState.TotalDeaths : 0}
+                    end={currentCountry.TotalDeaths || 0}
                     duration={2.5}
-                    separator={','}
+                    separator={","}
                   />
                 </h2>
                 <hr />
@@ -197,11 +187,9 @@ export default function MidDiv(props) {
           </Grid>
           {/* CHART */}
           <Grid item xs={12} className={classes.chart}>
-              {barChart}
+            {barChart}
           </Grid>
         </Grid>
-
-
       </div>
     );
   }
