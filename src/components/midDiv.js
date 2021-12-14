@@ -45,6 +45,10 @@ export default function MidDiv({ globalData, countriesData }) {
   if (countriesData) {
     countryNames = countriesData.map((countryObj) => countryObj.Country);
   }
+  // Date
+  let dateOfCases = new Date(currentCountry?.Date)
+  let today = `${dateOfCases.getDate()} ${dateOfCases.getMonth()} ${dateOfCases.getFullYear()}`
+  console.log(`today`, today)
 
   // Run when onChange / select box
   const onChange_Handler = (e) => {
@@ -92,7 +96,7 @@ export default function MidDiv({ globalData, countriesData }) {
     />
   ) : null;
 
-  // console.log(`currentCountry`, currentCountry);
+  console.log(`currentCountry`, currentCountry);
 
   // RETURN FROM HERE / JSX
   if (currentCountry === undefined) {
@@ -104,11 +108,7 @@ export default function MidDiv({ globalData, countriesData }) {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {/* DATE DISPLAYING */}
-              {/* <h3>
-                {displayState.Date
-                  ? new Date(displayState.Date).toDateString()
-                  : new Date().toDateString()}
-              </h3> */}
+              <h3>{today}</h3>
 
               {/* SELECT BOX */}
               <select onChange={onChange_Handler} className="select-box">
