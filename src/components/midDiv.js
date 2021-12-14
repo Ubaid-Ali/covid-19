@@ -47,7 +47,7 @@ export default function MidDiv({ globalData, countriesData }) {
   }
   // Date
   let dateOfCases = new Date(currentCountry?.Date)
-  let today = `${dateOfCases.getDate()} ${dateOfCases.getMonth()} ${dateOfCases.getFullYear()}`
+  let today = `${dateOfCases.getDate()}-${dateOfCases.getMonth()}-${dateOfCases.getFullYear()}`
   console.log(`today`, today)
 
   // Run when onChange / select box
