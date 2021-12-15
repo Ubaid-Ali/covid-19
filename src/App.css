@@ -59,9 +59,7 @@ body {
   font-weight: bold;
   color: #282c34;
   margin-bottom: 5px;
-  padding: 10px 20px;
 	border-radius: 10px 10px 2px 2px;
-  border: 3px solid rgb(0, 4, 255);
   box-shadow: 0 0 10px rgb(0, 4, 255);
   background-color: rgba(201, 198, 246, 0.801);
 }
@@ -69,12 +67,9 @@ body {
 .select-box option {
   font-family: "Segoe UI", "Open Sans", "Helvetica Neue", sans-serif;
   border: 3px solid lightgray;
-  box-shadow: 0 0 10px white;
   font-weight: bold;
   color: #282c34;
   margin-bottom: 5px;
-  padding: 10px 20px;
-	border-radius: 10px 10px 2px 2px;
   background-color: rgba(201, 198, 246, 0.801);
 }
 

@@ -27,9 +27,7 @@ function App() {
           <h2 className="app-h2"> CURRENT STATUS OF CORONA VIRUS </h2>
           <MidDiv
             globalData={globalData}
-            setGlobalData={setGlobalData}
             countriesData={countriesData}
-            setCountriesData={setCountriesData}
           />
           <br />
           <footer>

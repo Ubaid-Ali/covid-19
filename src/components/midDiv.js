@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
 // MID DIV
 export default function MidDiv({ globalData, countriesData }) {
   const classes = useStyles();
-  const [currentCountry, setCurretnCountry] = useState();
+  const [currentCountry, setCurrentCountry] = useState();
 
   useEffect(() => {
     if (globalData) {
-      setCurretnCountry({ ...globalData, Country: "Global" });
+      setCurrentCountry({ ...globalData, Country: "Global" });
     }
   }, [globalData, countriesData]);
 
@@ -48,25 +48,24 @@ export default function MidDiv({ globalData, countriesData }) {
   // Date
   let dateOfCases = new Date(currentCountry?.Date)
   let today = `${dateOfCases.getDate()}-${dateOfCases.getMonth()}-${dateOfCases.getFullYear()}`
-  console.log(`today`, today)
 
   // Run when onChange / select box
   const onChange_Handler = (e) => {
     // when select global again
     if (e.target.value === "Global") {
-      return setCurretnCountry({ ...globalData, Country: "Global" });
+      return setCurrentCountry({ ...globalData, Country: "Global" });
     } else {
       // when select country
       let selectedCountry = [];
       selectedCountry = countriesData.filter(
         (countryObj) => countryObj.Country === e.target.value
       );
-      setCurretnCountry(selectedCountry[0]);
+      setCurrentCountry(selectedCountry[0]);
     }
   };
 
   // Making a Chart
-  const barChart = setCurretnCountry ? (
+  const barChart = setCurrentCountry ? (
     <Bar
       data={{
         labels: ["infeced", "Recovered", "Deaths"],
@@ -95,8 +94,6 @@ export default function MidDiv({ globalData, countriesData }) {
       }}
     />
   ) : null;
-
-  console.log(`currentCountry`, currentCountry);
 
   // RETURN FROM HERE / JSX
   if (currentCountry === undefined) {
